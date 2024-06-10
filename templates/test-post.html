@@ -1,0 +1,100 @@
+
+
+
+{% extends 'base.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-lg">
+          <img style="height: 600px; justify-items: center;" src="{{ post.img_url }}" class="card-img-top" alt="Blog Post Featured Image">
+          <!--img src="https://via.placeholder.com/1200x600" class="card-img-top" alt="Blog Post Featured Image"-->
+          <div class="card-body">
+            <h1 class="card-title mb-3">{{ post.title }}</h1>
+            <div class="d-flex align-items-center mb-4">
+              <img src="{{ post.author.email | gravatar }}" class="rounded-circle me-3" alt="Author Avatar">
+              <div>
+                <h6 class="m-0">{{ post.author.f_name }} {{ post.author.l_name }}</h6>
+                <small class="text-muted">Published on {{ post.date }}</small>
+              </div>
+            </div>
+            <p class="card-text">
+                {{ post.body|safe}}
+            </p>
+            
+            <!-- Add more paragraphs as needed -->
+          </div>
+          <div class="card-footer bg-white">
+            <div class="row">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <h5 class="mb-2">Share this post</h5>
+                <button class="btn btn-outline-primary me-2">
+                  <i class="bi bi-facebook"></i> Facebook
+                </button>
+                <button class="btn btn-outline-info me-2">
+                  <i class="bi bi-twitter"></i> Twitter
+                </button>
+                <button class="btn btn-outline-danger">
+                  <i class="bi bi-linkedin"></i> LinkedIn
+                </button>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <h5 class="mb-2">Tags</h5>
+                <span class="badge bg-primary me-2">Football</span>
+                <span class="badge bg-primary me-2">Liverpool</span>
+                <span class="badge bg-primary">Jurgen Klopp</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Comments Section -->
+        <div class="card mt-4 shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title mb-4">Comments (3)</h4>
+            <div class="mb-4">
+                {% for comment in comments %}
+                <div class="d-flex align-items-start mb-3">
+                    <img style="height: 50px; width: 50px;" src="{{ comment.comment_author.email | gravatar }}" class="rounded-circle me-3" alt="Commenter Avatar">
+                    <div>
+                    <h6 class="m-0">{{ comment.comment_author.f_name }} {{ comment.comment_author.l_name }}</h6>
+                    <small class="text-muted">{{ post_time }}</small>
+                    <p class="mt-2 mb-0">{{ comment.text|safe }}.</p>
+                    {% if current_user == comment.comment_author %}
+                        <div>
+                            <a class="btn btn-sm btn-outline-danger rounded-pill" href="{{ url_for('delete_comment', comment_id=comment.id, post_id=post.id) }}">Delete</a>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+              <!-- Add more comments here -->
+            </div>
+            
+            <div class="mb-3">
+                <!--label for="commentInput" class="form-label">Add a comment</label-->
+                <div>   
+                    {{ ckeditor.load() }} {{ ckeditor.config(name='text'|safe ) }}
+                    {{ render_form(form) }} 
+                </div>
+                <!--textarea class="form-control" id="commentInput" rows="3"></textarea -->
+            </div>
+              <!--button type="submit" class="btn btn-primary">Post Comment</button-->
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock content %}
+

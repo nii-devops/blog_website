@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<!-- CREATE POST HERO SECTION -->
+<section style="height: auto;" id="create-post-header" class="align-items-center text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-white fw-semibold display-3">Create Blog Post</h3>
+                <p>Write an interesting blog post for our viewers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HERO SECTION -->
+<section style="height: auto;" id="create-post-form" class="align-items-center text-center">
+    <div class="create-post-form">
+        <div class="row">
+            <div style="align-items: center; align-content: center;" class="form-control justify-content ">
+                <div><h3>Create Post</h3></div>
+                <hr><br>
+                <div class="create-post-form-fields">
+                    {{ ckeditor.load() }} {{ ckeditor.config(name='body|safe') }} 
+                    {{ render_form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+
+
+
