@@ -110,7 +110,7 @@ sample_posts = [
 
     {
         "Title": "The Importance of Cybersecurity in the Digital Age",
-        "Category": "Technology"
+        "Category": "Technology",
         "Body": "In the digital age, cybersecurity has become a critical concern for individuals and organizations alike. With the increasing prevalence of cyber threats such as hacking, phishing, and ransomware, protecting sensitive information is paramount. Implementing strong passwords, using two-factor authentication, and regularly updating software are essential steps for enhancing security. Organizations should invest in robust cybersecurity measures, including firewalls, encryption, and employee training. Staying informed about the latest threats and best practices is also crucial. By prioritizing cybersecurity, we can safeguard our digital lives and ensure the integrity and privacy of our data."
     },
 

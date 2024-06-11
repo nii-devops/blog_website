@@ -449,6 +449,14 @@ def edit_post(post_id):
     return render_template('post.html', title=f"Post/{post_id}", form=form, post=post)
 
 
+@app.route("/delete-post/<int:post_id>", methods=['get', 'post'])
+def delete_post(post_id):
+    post = db.get_or_404(BlogPost, post_id)
+    if post and post.author == current_user:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('posts'))
+
 
 @app.route('/posts')
 def posts():

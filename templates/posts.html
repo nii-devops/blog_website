@@ -29,11 +29,16 @@
 
 
 <section id="all-posts">
-    <div class="container pt-5">
+    
+    <div class="container all-post-container pt-5">
         <div class="row">
             {% for post in posts %}
             <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card all-posts-card h-100">
+                
+                <div  class="card all-posts-card h-100">
+                    <div>
+                        <img src="{{ post.img_url }}" alt="" srcset="">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ post.author.f_name }} {{ post.author.l_name }}   --   {{ post.date }}</h6>
@@ -42,9 +47,10 @@
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            {% endfor %} 
         </div>
-    </div>  
+    </div> 
+    
 </section>
 
 {% endblock content %}

@@ -35,8 +35,8 @@
             </p>
             {% if post.author == current_user %}
             <div>
-              <a class="btn btn-sm btn-outline-warning rounded-pill me-2" href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a>
-              <a class="btn btn-sm btn-outline-danger rounded-pill ms-2" href="http://">Delete Post</a>
+              <a class="me-3" href="{{ url_for('edit_post', post_id=post.id) }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(78,87,212,1)"><path d="M9.24264 18.9967H21V20.9967H3V16.754L12.8995 6.85453L17.1421 11.0972L9.24264 18.9967ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path></svg>Edit</a>
+              <a class="ms-2" href="{{ url_for('delete_post', post_id=post.id) }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(242,8,8,1)"><path d="M7 6V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7ZM13.4142 13.9997L15.182 12.232L13.7678 10.8178L12 12.5855L10.2322 10.8178L8.81802 12.232L10.5858 13.9997L8.81802 15.7675L10.2322 17.1817L12 15.4139L13.7678 17.1817L15.182 15.7675L13.4142 13.9997ZM9 4V6H15V4H9Z"></path></svg>Delete Post</a>
             </div>
             {% endif %}
             
@@ -73,7 +73,7 @@
         <!-- Comments Section -->
         <div class="card mt-4 shadow-sm">
           <div class="card-body">
-            <h4 class="card-title mb-4">Comments ( {{ total_commentsg }} )</h4>
+            <h4 class="card-title mb-4">Comments ( {{ total_comments }} )</h4>
             <div class="mb-4">
                 {% for comment in comments %}
                 <div class="d-flex align-items-start mb-3">
@@ -84,8 +84,8 @@
                     <p class="mt-2 mb-0">{{ comment.text|safe }}.</p>
                     {% if current_user == comment.comment_author %}
                         <div>
-                            <a class="btn btn-sm btn-outline-warning rounded-pill me-2" href="{{ url_for('edit_comment', comment_id=comment.id, post_id=post.id) }}">Edit Comment</a>
-                            <a class="btn btn-sm btn-outline-danger rounded-pill" href="{{ url_for('delete_comment', comment_id=comment.id, post_id=post.id) }}">Delete</a>
+                            <a class="me-3" href="{{ url_for('edit_comment', comment_id=comment.id, post_id=post.id) }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(78,87,212,1)"><path d="M9.24264 18.9967H21V20.9967H3V16.754L12.8995 6.85453L17.1421 11.0972L9.24264 18.9967ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path></svg>Edit</a>
+                            <a class="ms-3" href="{{ url_for('delete_comment', comment_id=comment.id, post_id=post.id) }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="rgba(242,8,8,1)"><path d="M7 6V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7ZM13.4142 13.9997L15.182 12.232L13.7678 10.8178L12 12.5855L10.2322 10.8178L8.81802 12.232L10.5858 13.9997L8.81802 15.7675L10.2322 17.1817L12 15.4139L13.7678 17.1817L15.182 15.7675L13.4142 13.9997ZM9 4V6H15V4H9Z"></path></svg>Delete</a>
                         </div>
                     {% endif %}
                     </div>
@@ -96,6 +96,8 @@
             
             <div class="mb-3">
                 <!--label for="commentInput" class="form-label">Add a comment</label-->
+                <hr>
+                <h5 class="pt-3">Add a Comment</h5>
                 <div>   
                   {{ ckeditor.load() }} {{ ckeditor.config(name='text'|safe ) }}
                     {{ render_form(form) }} 

@@ -44,7 +44,7 @@ class RegisterForm(FlaskForm):
     l_name      = StringField(label='Last name', validators=[DataRequired()])
     email       = EmailField(label='Email', validators=[DataRequired()])
     password    = PasswordField(label='Password', validators=[Length(min=8), DataRequired(), EqualTo('password_2', message='Passwords must match')])
-    password_2  = PasswordField(label='Repeat Password', validators=[DataRequired()] )
+    password_2  = PasswordField(label='Repeat Password', validators=[DataRequired()])
     submit      = SubmitField("Register")
 
 
@@ -55,6 +55,6 @@ class LoginForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    text    = CKEditorField("Add a Comment", validators=[DataRequired()])
+    text    = CKEditorField("", validators=[DataRequired()])
     submit  = SubmitField("Submit Comment")
 

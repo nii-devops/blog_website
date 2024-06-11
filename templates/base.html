@@ -34,32 +34,36 @@
                 <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('posts') }}">All Posts</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#features">About</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#services">Services</a>
-              </li>
-              <li class="nav-item">
+              <li class="nav-item me-3">
                 <a class="nav-link active" aria-current="page" href="#portfolio">Contact</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#reviews">Reviews</a>
+
+              <li id="navbar-divider" class="nav-item ms-2">
+                <a style="color: #4e57d4;" class="nav-link disabled me-3" aria-current="page" href="#">||</a>
               </li>
+
               {% if current_user.is_authenticated %}
-              <li class="nav-item">
+              <li class="nav-item ms-3">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('create_post') }}">Create Post</a>
+              </li>
+              
+              <li class="nav-item ">
                 <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">Logout</a>
               </li>
               {% else %}
-              <li class="nav-item">
+              <li class="nav-item ms-3">
                 <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}">Login</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{ url_for('register') }}">Register</a>
               </li>
               {% endif %}
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('posts') }}">All Posts</a>
-              </li>
+              
               <li class="nav-item">
                 <a class="btn btn-danger btn-sm rounded-pill mt-2" aria-current="page" href="{{ url_for('purge_db') }}">Purge DB</a>
               </li>
