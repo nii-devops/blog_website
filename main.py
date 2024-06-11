@@ -325,7 +325,9 @@ def admin_only(f):
 
 @app.route("/")
 def home():
-    return render_template('index.html', title='Home')
+    result = db.session.execute(db.select(BlogPost).order_by(desc(BlogPost.id)))
+    posts = result.scalars().all()
+    return render_template('index.html', title='Home', posts=posts)
 
 
 @app.route("/login", methods=['get', 'post'])
@@ -392,7 +394,7 @@ def create_post():
             author=current_user,
             category=form.category.data,
             date=date.today().strftime("%B %d, %Y"),
-            body=(form.body.data).replace("<p>","").replace("</p>","")
+            body=(form.body.data)#.replace("<p>","").replace("</p>","")
         )
         db.session.add(new_post)
         db.session.commit()
@@ -412,9 +414,9 @@ def post(post_id):
         else:
             comment_time = datetime.now().replace(microsecond=0)
             new_comment = Comment(
-                text=(form.text.data).replace("<p>", "").replace("</p>", ""),
                 comment_author = current_user,
-                parent_post = post
+                parent_post = post,
+                text=(form.text.data),#.replace("<p>", "").replace("</p>", ""),
             )
             db.session.add(new_comment)
             db.session.commit()
@@ -427,12 +429,13 @@ def post(post_id):
 
 @app.route("/edit-post/<int:post_id>", methods=['get', 'post'])
 def edit_post(post_id):
-    form = CreatePostForm()
     post = db.get_or_404(BlogPost, post_id)
-    form.title.data     = post.title
-    form.img_url.data   = post.img_url
-    form.body.data      = post.body
-    form.category.data  = post.category
+    form = CreatePostForm(
+        category=post.category,
+        title=post.title,
+        img_url=post.img_url,
+        body=post.body
+    )
 
     if form.validate_on_submit():
         post.title = form.title.data
@@ -441,8 +444,7 @@ def edit_post(post_id):
         post.body = form.body.data
 
         db.session.commit()
-
-        return redirect(url_for('posts'))
+        return redirect(url_for('post', post_id=post.id))
     
     return render_template('post.html', title=f"Post/{post_id}", form=form, post=post)
 
@@ -469,6 +471,20 @@ def purge_db():
         db.session.delete(user)
         db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route("/edit-comment/<int:comment_id>", methods=['get', 'post'])
+@login_required
+def edit_comment(comment_id):
+    comment = db.get_or_404(Comment, comment_id)
+    form = CommentForm(
+        text=comment.text
+    )
+
+    if form.validate_on_submit():
+        comment.text=form.text.data
+        db.session.commit()
+    pass
 
 
 @app.route("/delete-comment/<int:comment_id>", methods=['get', 'post'])
