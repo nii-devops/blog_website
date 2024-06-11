@@ -33,6 +33,12 @@
             <p class="card-text">
                 {{ post.body|safe}}
             </p>
+            {% if post.author == current_user %}
+            <div>
+              <a class="btn btn-sm btn-outline-warning rounded-pill me-2" href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a>
+              <a class="btn btn-sm btn-outline-danger rounded-pill ms-2" href="http://">Delete Post</a>
+            </div>
+            {% endif %}
             
             <!-- Add more paragraphs as needed -->
           </div>
@@ -67,7 +73,7 @@
         <!-- Comments Section -->
         <div class="card mt-4 shadow-sm">
           <div class="card-body">
-            <h4 class="card-title mb-4">Comments ( {{ total_comments }} )</h4>
+            <h4 class="card-title mb-4">Comments ( {{ total_commentsg }} )</h4>
             <div class="mb-4">
                 {% for comment in comments %}
                 <div class="d-flex align-items-start mb-3">

@@ -65,6 +65,7 @@ db.init_app(app)
 # <-------- CONFIGURE TABLES ---------->
 # #######################################
 
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -422,6 +423,29 @@ def post(post_id):
     comments = result.scalars().all()
     total_comments = len(comments)
     return render_template('post.html', post=post, title=f"Post-{post.id}", form=form, comments=comments, total_comments=total_comments)
+
+
+@app.route("/edit-post/<int:post_id>", methods=['get', 'post'])
+def edit_post(post_id):
+    form = CreatePostForm()
+    post = db.get_or_404(BlogPost, post_id)
+    form.title.data     = post.title
+    form.img_url.data   = post.img_url
+    form.body.data      = post.body
+    form.category.data  = post.category
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.category = form.category.data
+        post.img_url = form.img_url.data
+        post.body = form.body.data
+
+        db.session.commit()
+
+        return redirect(url_for('posts'))
+    
+    return render_template('post.html', title=f"Post/{post_id}", form=form, post=post)
+
 
 
 @app.route('/posts')
